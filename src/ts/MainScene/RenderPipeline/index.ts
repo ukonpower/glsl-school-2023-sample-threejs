@@ -12,21 +12,26 @@ import dofComposite from './shaders/dofComposite.fs';
 import dofBokeh from './shaders/dofBokeh.fs';
 import compositeFrag from './shaders/composite.fs';
 
-export type PPParam = {
-	bloomBrightness?: number,
-	vignet?: number,
-}
-
 export class RenderPipeline {
+
+	// renderer
 
 	private renderer: THREE.WebGLRenderer;
 
+	// uniforms
+
 	private commonUniforms: ORE.Uniforms;
+
+	// renderTargets
+
+	private sceneRenderTarget: THREE.WebGLRenderTarget;
+	private depthTexture: THREE.DepthTexture;
+
+	// postprocess
 
 	private postProcess: PostProcess;
 
-	private depthTexture: THREE.DepthTexture;
-	private rt1: THREE.WebGLRenderTarget;
+	// postprocess pass
 
 	private fxaa: ORE.PostProcessPass;
 
@@ -48,7 +53,7 @@ export class RenderPipeline {
 		// rt
 
 		this.depthTexture = new THREE.DepthTexture( 1, 1 );
-		this.rt1 = new THREE.WebGLRenderTarget( 1, 1, { depthTexture: this.depthTexture } );
+		this.sceneRenderTarget = new THREE.WebGLRenderTarget( 1, 1, { depthTexture: this.depthTexture } );
 
 		// uniforms
 
@@ -271,11 +276,11 @@ export class RenderPipeline {
 
 		let rt = this.renderer.getRenderTarget();
 
-		this.renderer.setRenderTarget( this.rt1 );
+		this.renderer.setRenderTarget( this.sceneRenderTarget );
 
 		this.renderer.render( scene, camera );
 
-		this.postProcess.render( this.rt1.texture, { camera } );
+		this.postProcess.render( this.sceneRenderTarget.texture, { camera } );
 
 		this.renderer.setRenderTarget( rt );
 
@@ -287,7 +292,7 @@ export class RenderPipeline {
 
 		this.postProcess.resize( resolution );
 
-		this.rt1.setSize( resolution.x, resolution.y );
+		this.sceneRenderTarget.setSize( resolution.x, resolution.y );
 
 	}
 
