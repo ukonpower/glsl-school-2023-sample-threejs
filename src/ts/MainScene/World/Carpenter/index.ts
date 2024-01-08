@@ -58,7 +58,7 @@ export class Carpenter extends GLP.EventEmitter {
 
 		this.compFactory = new ComponentFactory( parentUniforms );
 
-		if ( process.env.NODE_ENV == "development" ) {
+		if ( process.env.NODE_ENV == "development" && false ) {
 
 			this.blidge.connect( 'ws://localhost:3100' );
 

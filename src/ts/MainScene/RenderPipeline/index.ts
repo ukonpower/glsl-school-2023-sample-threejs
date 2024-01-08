@@ -193,6 +193,11 @@ export class RenderPipeline {
 			defines: {
 				BLOOM_COUNT: this.bloomRenderCount.toString()
 			},
+		} );
+
+		// out
+
+		let out = new PostProcessPass( {
 			renderTarget: null
 		} );
 
@@ -206,7 +211,9 @@ export class RenderPipeline {
 				this.bloomBright,
 				...this.bloomBlur,
 				this.composite,
-			] } );
+				out
+			]
+		} );
 
 	}
 

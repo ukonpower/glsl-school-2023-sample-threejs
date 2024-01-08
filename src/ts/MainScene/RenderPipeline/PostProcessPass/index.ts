@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import * as ORE from 'ore-three';
 
 import quadVert from './shaders/quad.vs';
+import outFrag from './shaders/out.fs';
 
 export interface PostProcessPassParam extends THREE.ShaderMaterialParameters {
 	renderTarget?: THREE.WebGLRenderTarget | null,
@@ -37,7 +38,7 @@ export class PostProcessPass extends THREE.ShaderMaterial {
 			},
 		} );
 
-		super( { ...materialParam, vertexShader: param.vertexShader || quadVert, glslVersion: THREE.GLSL3, uniforms } );
+		super( { ...materialParam, vertexShader: param.vertexShader || quadVert, fragmentShader: param.fragmentShader || outFrag, glslVersion: THREE.GLSL3, uniforms } );
 
 		if ( renderTarget === undefined ) {
 

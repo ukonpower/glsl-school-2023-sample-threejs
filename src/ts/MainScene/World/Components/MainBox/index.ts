@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import * as ORE from 'ore-three';
 import { Component, ComponentOptions, ComponentUpdateEvent } from '../Component';
 
 export class MainBox extends Component {
