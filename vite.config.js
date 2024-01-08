@@ -6,7 +6,7 @@ const pageList = [
 	{ name: 'index', path: '/' },
 ];
 
-const basePath = process.env.GITHUB_PAGES ? '/three-template-vite' : '';
+const basePath = process.env.GITHUB_PAGES ? '/glsl-school-2023-sample-threejs' : '';
 
 const input = {
 	...( () => {
