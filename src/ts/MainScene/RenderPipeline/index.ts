@@ -1,6 +1,9 @@
 import * as THREE from 'three';
 import * as ORE from 'ore-three';
 
+import { PostProcessPass } from './PostProcessPass';
+import { PostProcess } from './PostProcess';
+
 import fxaaFrag from './shaders/fxaa.fs';
 import bloomBlurFrag from './shaders/bloomBlur.fs';
 import bloomBrightFrag from './shaders/bloomBright.fs';
@@ -20,7 +23,7 @@ export class RenderPipeline {
 
 	private commonUniforms: ORE.Uniforms;
 
-	private postProcess: ORE.PostProcess;
+	private postProcess: PostProcess;
 
 	private depthTexture: THREE.DepthTexture;
 	private rt1: THREE.WebGLRenderTarget;
@@ -28,15 +31,15 @@ export class RenderPipeline {
 	private fxaa: ORE.PostProcessPass;
 
 	private bloomRenderCount: number;
-	private bloomBright: ORE.PostProcessPass;
-	private bloomBlur: ORE.PostProcessPass[];
+	private bloomBright: PostProcessPass;
+	private bloomBlur: PostProcessPass[];
 
 	private dofParams: THREE.Vector4;
-	public dofCoc: ORE.PostProcessPass;
-	public dofBokeh: ORE.PostProcessPass;
-	public dofComposite: ORE.PostProcessPass;
+	public dofCoc: PostProcessPass;
+	public dofBokeh: PostProcessPass;
+	public dofComposite: PostProcessPass;
 
-	private composite: ORE.PostProcessPass;
+	private composite: PostProcessPass;
 
 	constructor( renderer: THREE.WebGLRenderer, parentUniforms: ORE.Uniforms ) {
 
@@ -56,7 +59,7 @@ export class RenderPipeline {
 
 		this.dofParams = new THREE.Vector4();
 
-		this.dofCoc = new ORE.PostProcessPass( {
+		this.dofCoc = new PostProcessPass( {
 			fragmentShader: dofCoc,
 			uniforms: ORE.UniformsLib.mergeUniforms( this.commonUniforms, {
 				uParams: {
@@ -71,7 +74,7 @@ export class RenderPipeline {
 			resolutionRatio: 0.5
 		} );
 
-		this.dofBokeh = new ORE.PostProcessPass( {
+		this.dofBokeh = new PostProcessPass( {
 			fragmentShader: dofBokeh,
 			uniforms: ORE.UniformsLib.mergeUniforms( this.commonUniforms, {
 				uParams: {
@@ -86,7 +89,7 @@ export class RenderPipeline {
 			resolutionRatio: 0.5
 		} );
 
-		this.dofComposite = new ORE.PostProcessPass( {
+		this.dofComposite = new PostProcessPass( {
 			fragmentShader: dofComposite,
 			uniforms: ORE.UniformsLib.mergeUniforms( {
 				uBokehTex: {
@@ -98,7 +101,7 @@ export class RenderPipeline {
 
 		// fxaa
 
-		this.fxaa = new ORE.PostProcessPass( {
+		this.fxaa = new PostProcessPass( {
 			fragmentShader: fxaaFrag,
 			uniforms: this.commonUniforms,
 		} );
@@ -107,7 +110,7 @@ export class RenderPipeline {
 
 		this.bloomRenderCount = 4;
 
-		this.bloomBright = new ORE.PostProcessPass( {
+		this.bloomBright = new PostProcessPass( {
 			fragmentShader: bloomBrightFrag,
 			uniforms: ORE.UniformsLib.mergeUniforms( this.commonUniforms, {
 				threshold: {
@@ -134,7 +137,7 @@ export class RenderPipeline {
 
 		for ( let i = 0; i < this.bloomRenderCount; i ++ ) {
 
-			let blurVertical = new ORE.PostProcessPass( {
+			let blurVertical = new PostProcessPass( {
 				fragmentShader: bloomBlurFrag,
 				uniforms: ORE.UniformsLib.mergeUniforms( bloomCommonUniforms, {
 					uIsVertical: {
@@ -151,7 +154,7 @@ export class RenderPipeline {
 				passThrough: true,
 			} );
 
-			let blurHorizontal = new ORE.PostProcessPass( {
+			let blurHorizontal = new PostProcessPass( {
 				fragmentShader: bloomBlurFrag,
 				uniforms: ORE.UniformsLib.mergeUniforms( bloomCommonUniforms, {
 					uIsVertical: {
@@ -180,7 +183,7 @@ export class RenderPipeline {
 
 		// composite
 
-		this.composite = new ORE.PostProcessPass( {
+		this.composite = new PostProcessPass( {
 			fragmentShader: compositeFrag,
 			uniforms: ORE.UniformsLib.mergeUniforms( this.commonUniforms, {
 				uBloomTexture: {
@@ -193,7 +196,7 @@ export class RenderPipeline {
 			renderTarget: null
 		} );
 
-		this.postProcess = new ORE.PostProcess( {
+		this.postProcess = new PostProcess( {
 			renderer: this.renderer,
 			passes: [
 				this.dofCoc,

@@ -1,0 +1,64 @@
+{
+	"name": "ore-three",
+	"version": "4.0.0",
+	"description": "",
+	"author": "ukonpower",
+	"license": "MIT",
+	"keywords": [
+		"threejs",
+		"webgl"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ukonpower/ore-three"
+	},
+	"bugs": {
+		"url": "https://github.com/ukonpower/ore-three/issues"
+	},
+	"type": "module",
+	"main": "./build/ore-three.umd.cjs",
+	"module": "./build/ore-three.js",
+	"exports": {
+		".": {
+			"import": "./build/ore-three.js",
+			"require": "./build/ore-three.umd.cjs"
+		}
+	},
+	"types": "./types/index.d.ts",
+	"files": [
+		"build",
+		"types"
+	],
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc && vite build",
+		"lint": "eslint ./src/**/*.ts --fix"
+	},
+	"dependencies": {
+		"lethargy": "^1.0.9",
+		"wolfy87-eventemitter": "^5.2.9"
+	},
+	"devDependencies": {
+		"@types/jest": "^29.4.0",
+		"@types/offscreencanvas": "^2019.7.0",
+		"@types/three": ">=0.149.0",
+		"@types/webgl2": "0.0.7",
+		"@typescript-eslint/eslint-plugin": "^5.54.0",
+		"@typescript-eslint/parser": "^5.54.0",
+		"del": "^7.0.0",
+		"eslint": "^8.35.0",
+		"eslint-config-mdcs": "^5.0.0",
+		"glslify-hex": "^2.1.1",
+		"glslify-import": "^3.1.0",
+		"glslify-loader": "^2.0.0",
+		"raw-loader": "^4.0.2",
+		"sass": "^1.58.3",
+		"ts-jest": "^29.0.5",
+		"typescript": "^4.9.5",
+		"vite": "^4.1.4"
+	},
+	"peerDependencies": {
+		"@types/three": ">=0.144.0",
+		"three": ">=0.144.0"
+	}
+}
