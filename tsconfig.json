@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+	"strict": true,
+    "sourceMap": true,
+    "target": "es6",
+    "module": "es2015",
+    "moduleResolution": "node",
+	"allowSyntheticDefaultImports": true,
+	"resolveJsonModule": true,
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "typeRoots": ["node_modules/@types"],
+    "rootDir": "./",
+	"baseUrl": ".",
+	"paths": {
+		"ore-three" : ["./src/ts/libs/ore-three/packages/ore-three/src"],
+		"glpower" : ["./src/ts/libs/glpower/packages/glpower/src"],
+	}
+  },
+  "include": ["./src/"]
+} 

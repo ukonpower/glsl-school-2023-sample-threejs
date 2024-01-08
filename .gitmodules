@@ -1,0 +1,6 @@
+[submodule "src/ts/libs/ore-three"]
+	path = src/ts/libs/ore-three
+	url = https://github.com/ukonpower/ore-three.git
+[submodule "src/ts/libs/glpower"]
+	path = src/ts/libs/glpower
+	url = https://github.com/ukonpower/glpower.git
